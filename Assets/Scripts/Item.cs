@@ -1,16 +1,37 @@
+using System;
 using UnityEngine;
+using DG.Tweening;
 
 public class Item : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
+    public float moveDistance = 5f;
+
+    [HideInInspector] public bool isReady;
+
+    public void SetColor(Color color)
     {
-        
+        spriteRenderer.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Move(Vector3 direction)
     {
-        
+        transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
+            .SetEase(Ease.OutQuad);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Splitter"))
+        {
+            if (GameManager.Instance.currentItem != null && GameManager.Instance.currentItem != this)
+            {
+                Destroy(GameManager.Instance.currentItem.gameObject);
+            }
+
+            isReady = true;
+            GameManager.Instance.currentItem = this;
+        }
     }
 }
