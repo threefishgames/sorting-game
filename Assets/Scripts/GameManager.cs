@@ -1,15 +1,27 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    public ItemTypes items;
     public float minSwipeDistance = 50f;
     public float moveSpeed = 2f;
 
     private Vector2 initialPosition;
     private bool isSwiping;
-    private float fadeAwayTime =0.2f;
+    private float fadeAwayTime = 0.2f;
 
     public Item currentItem;
+
+    public static event Action<ItemData[]> OnNewWave;
+
+
+    public float maxSpawnDelay = 2f;
+
+    private float _timer;
+    [Range(0.1f, 1)] public float difficulty = 0.5f;
 
     protected override void Awake()
     {
@@ -23,12 +35,36 @@ public class GameManager : Singleton<GameManager>
 
     private void StartGame()
     {
+    }
 
+    public void DecideLevel()
+    {
     }
 
     private void Update()
     {
+        // spawn a wave in every n seconds
+        _timer += Time.deltaTime;
+        if (_timer >= maxSpawnDelay / difficulty)
+        {
+            _timer = 0;
+            GenerateWave();
+        }
+
         DetectSwipe();
+    }
+
+    private void GenerateWave(int number = 3)
+    {
+        List<ItemData> tempItems = new List<ItemData>();
+        for (int i = 0; i < number; i++)
+        {
+            ItemData instance = new ItemData();
+            instance.ColorIndex = Random.Range(0, items.colors.Count);
+            instance.ShapeIndex = Random.Range(0, items.items.Count);
+            tempItems.Add(instance);
+        }
+        OnNewWave?.Invoke(tempItems.ToArray());
     }
 
     private void DetectSwipe()
