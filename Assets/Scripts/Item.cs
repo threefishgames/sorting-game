@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
     public float moveDistance = 5f;
 
     [HideInInspector] public bool isReady;
+    [HideInInspector] public bool isUIElement;
 
     public void SetColor(Color color)
     {

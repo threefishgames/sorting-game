@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0794a893f61c0cb4e80f62bb11dc86c5, type: 3}
+  m_Name: Item Types
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTypes
+  items:
+  - {fileID: 1805919862138236810, guid: eeaad923b8fe0364696ad45cdf10dd0b, type: 3}
+  - {fileID: 7182205157064956857, guid: 7f1ce33c4080cfd448dbd3731a03c5ca, type: 3}
+  - {fileID: 7003343044541713924, guid: 9ecda3084524e3c45b3d4b0b15f25622, type: 3}
+  - {fileID: 6460747946020471666, guid: 311b64716d1b35f4baff3413e2c6f98f, type: 3}
+  - {fileID: 5197793759936533763, guid: 2032e9fe53b77dd4281be70bec72bc12, type: 3}
+  - {fileID: 2353424487444353519, guid: d43e9e717104c9c41b0776cd0b3466ba, type: 3}
+  colors:
+  - {r: 1, g: 0.380503, b: 0.380503, a: 0}
+  - {r: 0.9811321, g: 0.94337165, b: 0.36715314, a: 0}
