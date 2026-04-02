@@ -27,11 +27,16 @@ public class Item : MonoBehaviour
         {
             if (GameManager.Instance.currentItem != null && GameManager.Instance.currentItem != this)
             {
-                Destroy(GameManager.Instance.currentItem.gameObject);
+                GameManager.Instance.DestroyCurrentItem();
             }
 
             isReady = true;
             GameManager.Instance.currentItem = this;
         }
+    }
+
+    public void FadeAway(float fadeAwayTime)
+    {
+        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() => Destroy(gameObject));
     }
 }

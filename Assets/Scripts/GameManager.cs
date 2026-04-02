@@ -7,6 +7,7 @@ public class GameManager : Singleton<GameManager>
 
     private Vector2 initialPosition;
     private bool isSwiping;
+    private float fadeAwayTime =0.2f;
 
     public Item currentItem;
 
@@ -84,6 +85,13 @@ public class GameManager : Singleton<GameManager>
                 item.Move(Vector3.down);
                 break;
         }
+    }
+
+
+    public void DestroyCurrentItem()
+    {
+        currentItem.FadeAway(fadeAwayTime);
+        currentItem = null;
     }
 }
 
