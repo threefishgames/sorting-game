@@ -5,50 +5,52 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
-    public ItemTypes items;
-    public float minSwipeDistance = 50f;
-    public float moveSpeed = 2f;
-
-    private Vector2 initialPosition;
-    private bool isSwiping;
-    private float fadeAwayTime = 0.2f;
-
-    public Item currentItem;
-
     public static event Action<ItemData[]> OnNewWave;
 
-
-    public float maxSpawnDelay = 2f;
-
-    private float _timer;
+    [Header("Game Settings")]
     [Range(0.1f, 1)] public float difficulty = 0.5f;
+    public ItemTypes items;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    [Header("Spawning")]
+    public float maxSpawnDelay = 2f;
+    public float moveDelay = 3f;
+    public float moveSpeed = 2f;
 
-    void Start()
-    {
-        StartGame();
-    }
+    [Header("Swipe")]
+    public float minSwipeDistance = 50f;
 
-    private void StartGame()
-    {
-    }
+    [Header("Runtime")]
+    public Item currentItem;
 
-    public void DecideLevel()
+    private bool isSwiping;
+    private float fadeAwayTime = 0.2f;
+    private float _timer;
+    private float _moveTimer;
+    private Vector2 initialPosition;
+
+    private void Start()
     {
+        _timer = maxSpawnDelay;
     }
 
     private void Update()
     {
-        // spawn a wave in every n seconds
         _timer += Time.deltaTime;
-        if (_timer >= maxSpawnDelay / difficulty)
+        if (_timer >= maxSpawnDelay)
         {
             _timer = 0;
             GenerateWave();
+        }
+
+     
+        _moveTimer += Time.deltaTime;
+        if (_moveTimer >= moveDelay / difficulty)
+        {
+            _moveTimer = 0;
+            if (Spawner.Instance != null && Spawner.Instance.spawnedObjects.Count > 0)
+            {
+                Spawner.Instance.MoveObject();
+            }
         }
 
         DetectSwipe();

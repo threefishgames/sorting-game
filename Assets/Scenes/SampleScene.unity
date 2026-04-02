@@ -709,22 +709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a19c5563e822f34ea7550be66743517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
-  difficulty: 1
-  colors:
-  - {r: 0.85, g: 0.55, b: 0.55, a: 1}
-  - {r: 0.55, g: 0.65, b: 0.85, a: 1}
-  - {r: 0.6, g: 0.8, b: 0.65, a: 1}
-  - {r: 0.9, g: 0.82, b: 0.55, a: 1}
-  prefabs:
-  - {fileID: 5267567927969599219, guid: eeaad923b8fe0364696ad45cdf10dd0b, type: 3}
-  - {fileID: 3727170821380766400, guid: 7f1ce33c4080cfd448dbd3731a03c5ca, type: 3}
-  - {fileID: 3541268499136556925, guid: 9ecda3084524e3c45b3d4b0b15f25622, type: 3}
-  - {fileID: 701703450532946443, guid: 311b64716d1b35f4baff3413e2c6f98f, type: 3}
-  - {fileID: 1745011224133661818, guid: 2032e9fe53b77dd4281be70bec72bc12, type: 3}
-  - {fileID: 8123588344251658390, guid: d43e9e717104c9c41b0776cd0b3466ba, type: 3}
+  shapesAndColors: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   spawnPoint: {fileID: 1240095186}
   midPoint: {fileID: 1102944071}
-  maxSpawnDelay: 1
 --- !u!4 &1240095186
 Transform:
   m_ObjectHideFlags: 0
@@ -769,8 +756,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d40f66d6c77dc34a90f8fd8988e0026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  minSwipeDistance: 50
+  difficulty: 1
+  items: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
+  maxSpawnDelay: 10
+  moveDelay: 3
   moveSpeed: 10
+  minSwipeDistance: 50
   currentItem: {fileID: 0}
 --- !u!4 &1509445674
 Transform:
