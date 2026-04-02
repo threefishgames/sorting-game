@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1636554965171875337, guid: 50d49c3d6abae904db4a85580aee3949, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+      objectReference: {fileID: 21300000, guid: e2ffa31dadb4b3e4bb291735448b4546, type: 3}
     - target: {fileID: 1712887580249655542, guid: 50d49c3d6abae904db4a85580aee3949, type: 3}
       propertyPath: m_Name
       value: Item Triangle
@@ -106,8 +106,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.21133333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 1636554965171875337, guid: 50d49c3d6abae904db4a85580aee3949, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
+      objectReference: {fileID: 21300000, guid: 42c49bc5d140e8d4dbb641c0967626f6, type: 3}
     - target: {fileID: 1712887580249655542, guid: 50d49c3d6abae904db4a85580aee3949, type: 3}
       propertyPath: m_Name
-      value: Item Variant
+      value: Item Capsule
       objectReference: {fileID: 0}
     - target: {fileID: 6493895358618192237, guid: 50d49c3d6abae904db4a85580aee3949, type: 3}
       propertyPath: m_LocalPosition.x
