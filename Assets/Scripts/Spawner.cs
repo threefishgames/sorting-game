@@ -14,6 +14,8 @@ public class Spawner : Singleton<Spawner>
         spawnPoint = transform;
         midPoint = GameObject.Find("MidPoint").transform;
     }
+    
+    
 
     private void Spawn(GameObject item, Color color)
     {
