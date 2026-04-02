@@ -2,6 +2,12 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 
+public struct ItemData
+{
+    public int ShapeIndex;
+    public int ColorIndex;
+}
+
 public class Item : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
