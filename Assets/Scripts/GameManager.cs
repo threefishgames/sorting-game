@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class GameManager : Singleton<GameManager>
 {
     public static event Action<ItemData[]> OnNewWave;
+    public static event Action<int> OnScoreUpdated;
 
     [Header("Game Settings")]
     [Range(0.1f, 1)] public float difficulty = 0.5f;
@@ -29,6 +30,17 @@ public class GameManager : Singleton<GameManager>
     private float fadeAwayTime = 0.2f;
     private float _moveTimer;
     private Vector2 initialPosition;
+
+    public int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            OnScoreUpdated?.Invoke(value);
+        }
+    }
+    private int score;
 
     private void Start()
     {
@@ -161,6 +173,15 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void OnCorrectSort()
+    {
+        Score++;
+    }
+
+    public void OnWrongSort()
+    {
+        Score--;
+    }
 
     public void DestroyCurrentItem()
     {
