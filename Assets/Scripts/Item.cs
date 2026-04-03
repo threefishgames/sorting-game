@@ -2,10 +2,25 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 
-public struct ItemData
+public struct ItemData : IEquatable<ItemData>
 {
     public int ShapeIndex;
     public int ColorIndex;
+
+    public bool Equals(ItemData other)
+    {
+        return ShapeIndex == other.ShapeIndex && ColorIndex == other.ColorIndex;
+    }
+
+    public override bool Equals(object obj) => obj is ItemData other && Equals(other);
+
+    public override int GetHashCode()
+    {
+        return ShapeIndex * 397 ^ ColorIndex;
+    }
+    
+    public static bool operator ==(ItemData lhs, ItemData rhs) => lhs.Equals(rhs);
+    public static bool operator !=(ItemData lhs, ItemData rhs)  => !lhs.Equals(rhs);
 }
 
 public class Item : MonoBehaviour
@@ -28,11 +43,8 @@ public class Item : MonoBehaviour
     {
         transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
             .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                Spawner.Instance.ResolveItem();
-                Destroy(gameObject);
-            });
+            .OnComplete(() => Destroy(gameObject));
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -67,10 +79,6 @@ public class Item : MonoBehaviour
 
     public void FadeAway(float fadeAwayTime)
     {
-        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() =>
-        {
-            Spawner.Instance.ResolveItem();
-            Destroy(gameObject);
-        });
+        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() => Destroy(gameObject));
     }
 }

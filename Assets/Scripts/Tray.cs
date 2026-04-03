@@ -15,6 +15,15 @@ public class Tray : MonoBehaviour
     private GameObject currentTray;
     public List<ItemData> items;
 
+    private Action scoreIncreaseCallback;
+    private Action scoreDecreaseCallback;
+
+    public void Init(Action ScoreIncreaseCallback, Action ScoreDecreaseCallback)
+    {
+        scoreIncreaseCallback = ScoreIncreaseCallback;
+        scoreDecreaseCallback = ScoreDecreaseCallback;
+    }
+
     public void SetTrayItems(ItemData[] newItems)
     {
         items = new List<ItemData>(newItems);
@@ -25,6 +34,14 @@ public class Tray : MonoBehaviour
     {
         if (other.TryGetComponent<Item>(out var item))
         {
+            if (items.Contains(item.itemData))
+            {
+                scoreIncreaseCallback?.Invoke();
+            }
+            else
+            {
+                scoreDecreaseCallback?.Invoke();
+            }
         }
     }
 
