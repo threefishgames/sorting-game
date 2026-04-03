@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fd2d150780d0434baf9cb945edb99fe, type: 3}
-  m_Name: New Spawn Settings
+  m_Name: New Spawn Settings - default
   m_EditorClassIdentifier: Assembly-CSharp::SpawnSettings
   waves:
   - waveDuration: 36

@@ -80,4 +80,84 @@ public class SpawnSettings : ScriptableObject
         UnityEditor.EditorUtility.SetDirty(this);
 #endif
     }
+
+    [ContextMenu("Generate Hard Waves (50)")]
+    public void GenerateHardWaves()
+    {
+        waves.Clear();
+
+        int waveCount = 50;
+        int cycleLength = 5;
+
+        // Phase 1 (waves 1-15):  Learning — 3-4 items, comfortable pace
+        // Phase 2 (waves 16-30): Mid — 4-6 items, faster pace
+        // Phase 3 (waves 31-50): Brutal — 6-8 items, tight timing
+
+        for (int i = 0; i < waveCount; i++)
+        {
+            float globalT = (float)i / (waveCount - 1);
+
+            int cyclePos = i % cycleLength;
+            bool isRelief = cyclePos == cycleLength - 1;
+
+            float localT;
+            if (isRelief)
+            {
+                localT = globalT * 0.35f;
+            }
+            else
+            {
+                float ramp = (float)cyclePos / (cycleLength - 1);
+                localT = Mathf.Lerp(globalT * 0.5f, globalT, ramp);
+            }
+
+            localT = Mathf.Clamp01(localT);
+
+            float duration, delay, speed;
+            int itemCount;
+
+            if (i < 15)
+            {
+                // Phase 1: Learning
+                float phaseT = localT * 2f; // stretch localT for this phase
+                phaseT = Mathf.Clamp01(phaseT);
+                duration = Mathf.Round(Mathf.Lerp(30f, 40f, phaseT));
+                delay = Mathf.Round(Mathf.Lerp(2.0f, 1.6f, phaseT) * 10f) / 10f;
+                speed = Mathf.Round(Mathf.Lerp(12f, 11f, phaseT) * 10f) / 10f;
+                itemCount = Mathf.RoundToInt(Mathf.Lerp(3, 4, phaseT));
+            }
+            else if (i < 30)
+            {
+                // Phase 2: Mid — introduce more combinations
+                float phaseT = (localT - 0.3f) / 0.4f;
+                phaseT = Mathf.Clamp01(phaseT);
+                duration = Mathf.Round(Mathf.Lerp(40f, 55f, phaseT));
+                delay = Mathf.Round(Mathf.Lerp(1.6f, 1.2f, phaseT) * 10f) / 10f;
+                speed = Mathf.Round(Mathf.Lerp(11f, 9f, phaseT) * 10f) / 10f;
+                itemCount = Mathf.RoundToInt(Mathf.Lerp(4, 6, phaseT));
+            }
+            else
+            {
+                // Phase 3: Brutal — lots of items, fast pace
+                float phaseT = (localT - 0.6f) / 0.4f;
+                phaseT = Mathf.Clamp01(phaseT);
+                duration = Mathf.Round(Mathf.Lerp(55f, 72f, phaseT));
+                delay = Mathf.Round(Mathf.Lerp(1.2f, 0.8f, phaseT) * 10f) / 10f;
+                speed = Mathf.Round(Mathf.Lerp(9f, 7f, phaseT) * 10f) / 10f;
+                itemCount = Mathf.RoundToInt(Mathf.Lerp(6, 8, phaseT));
+            }
+
+            waves.Add(new SpawnSettingsEntry
+            {
+                waveDuration = duration,
+                moveDelay = delay,
+                moveSpeed = speed,
+                itemsPerWave = itemCount
+            });
+        }
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
+    }
 }

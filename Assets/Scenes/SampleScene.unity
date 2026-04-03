@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   difficulty: 0.5
   items: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
-  spawnSettings: {fileID: 11400000, guid: 60376a68e89a7b143a9d1fcc10493331, type: 2}
+  spawnSettings: {fileID: 11400000, guid: 0974ef9f9e6e3554c9210c10ba1073ed, type: 2}
   moveSpeed: 12
   minSwipeDistance: 50
   currentItem: {fileID: 0}
