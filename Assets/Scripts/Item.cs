@@ -18,9 +18,9 @@ public struct ItemData : IEquatable<ItemData>
     {
         return ShapeIndex * 397 ^ ColorIndex;
     }
-    
+
     public static bool operator ==(ItemData lhs, ItemData rhs) => lhs.Equals(rhs);
-    public static bool operator !=(ItemData lhs, ItemData rhs)  => !lhs.Equals(rhs);
+    public static bool operator !=(ItemData lhs, ItemData rhs) => !lhs.Equals(rhs);
 }
 
 public class Item : MonoBehaviour
@@ -43,8 +43,11 @@ public class Item : MonoBehaviour
     {
         transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
             .SetEase(Ease.OutQuad)
-            .OnComplete(() => Destroy(gameObject));
-        
+            .OnComplete(() =>
+            {
+                Spawner.Instance.ResolveItem();
+                Destroy(gameObject);
+            });
     }
 
     private void OnTriggerEnter2D(Collider2D other)
