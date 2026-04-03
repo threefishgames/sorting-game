@@ -8,8 +8,8 @@ public class Spawner : Singleton<Spawner>
     public Transform spawnPoint;
     public Transform midPoint;
 
-    
     public Queue<Item> spawnedObjects = new Queue<Item>();
+
     private void OnValidate()
     {
         spawnPoint = transform;
@@ -35,11 +35,11 @@ public class Spawner : Singleton<Spawner>
             var obj = Instantiate(shapesAndColors.items[shapeIndex], spawnPoint.position, spawnPoint.rotation);
             var color = shapesAndColors.colors[colorIndex];
             var spawnedObject = obj.GetComponent<Item>();
-            spawnedObject.SetColor(color);
+            spawnedObject.Init(data[i], color);
             spawnedObjects.Enqueue(spawnedObject);
         }
     }
-    
+
     public void MoveObject()
     {
         var obj = spawnedObjects.Dequeue();
@@ -51,9 +51,6 @@ public class Spawner : Singleton<Spawner>
                 {
                     GameManager.Instance.DestroyCurrentItem();
                 }
-
-                obj.isReady = true;
-                GameManager.Instance.currentItem = obj;
             });
     }
 }

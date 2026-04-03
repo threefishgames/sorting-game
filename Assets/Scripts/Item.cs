@@ -10,6 +10,7 @@ public struct ItemData
 
 public class Item : MonoBehaviour
 {
+    public ItemData itemData = new ItemData();
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public float moveDistance = 5f;
@@ -17,8 +18,9 @@ public class Item : MonoBehaviour
     [HideInInspector] public bool isReady;
     [HideInInspector] public bool isUIElement;
 
-    public void SetColor(Color color)
+    public void Init(ItemData data, Color color)
     {
+        this.itemData = data;
         spriteRenderer.color = color;
     }
 
@@ -30,8 +32,8 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(isUIElement) return;
-        
+        if (isUIElement) return;
+
         if (other.CompareTag("Splitter"))
         {
             if (GameManager.Instance.currentItem != null && GameManager.Instance.currentItem != this)
@@ -41,6 +43,20 @@ public class Item : MonoBehaviour
 
             isReady = true;
             GameManager.Instance.currentItem = this;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (isUIElement) return;
+
+        if (other.CompareTag("Splitter"))
+        {
+            isReady = false;
+            if (GameManager.Instance.currentItem == this)
+            {
+                GameManager.Instance.currentItem = null;
+            }
         }
     }
 

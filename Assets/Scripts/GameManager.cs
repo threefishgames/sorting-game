@@ -109,6 +109,7 @@ public class GameManager : Singleton<GameManager>
             return;
 
         Item item = currentItem;
+        item.isReady = false;
         currentItem = null;
 
         switch (direction)

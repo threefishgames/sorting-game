@@ -859,7 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
   shapesAndColors: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   spawnPoint: {fileID: 1240095186}
-  midPoint: {fileID: 0}
+  midPoint: {fileID: 1102944071}
 --- !u!4 &1240095186
 Transform:
   m_ObjectHideFlags: 0
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   difficulty: 1
   items: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
-  maxSpawnDelay: 10
+  maxSpawnDelay: 50
   moveDelay: 3
   moveSpeed: 10
   minSwipeDistance: 50

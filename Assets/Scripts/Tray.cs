@@ -48,7 +48,7 @@ public class Tray : MonoBehaviour
             Vector2 spawnPos = new Vector2(xPos, yPos + animHeight);
             GameObject item = Instantiate(itemType.items[i.ShapeIndex].gameObject, spawnPos, Quaternion.identity, currentTray.transform);
             item.transform.localScale = Vector3.zero;
-            item.GetComponent<Item>().SetColor(itemType.colors[i.ColorIndex]);
+            item.GetComponent<Item>().Init(itemType.colors[i.ColorIndex]);
 
             SpriteRenderer itemSr = item.GetComponent<SpriteRenderer>();
             itemSr.color = new Color(itemSr.color.r, itemSr.color.g, itemSr.color.b, 0f);
