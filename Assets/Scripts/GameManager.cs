@@ -12,9 +12,9 @@ public class GameManager : Singleton<GameManager>
     public ItemTypes items;
 
     [Header("Spawning")]
-    public float maxSpawnDelay = 2f;
-    public float moveDelay = 3f;
-    public float moveSpeed = 2f;
+    public float waveDuration = 36f;
+    public float moveDelay = 2f;
+    public float moveSpeed = 12f;
 
     [Header("Swipe")]
     public float minSwipeDistance = 50f;
@@ -24,30 +24,27 @@ public class GameManager : Singleton<GameManager>
 
     private bool isSwiping;
     private float fadeAwayTime = 0.2f;
-    private float _timer;
     private float _moveTimer;
     private Vector2 initialPosition;
 
     private void Start()
     {
-        _timer = maxSpawnDelay;
+        GenerateWave();
     }
 
     private void Update()
     {
-        _timer += Time.deltaTime;
-        if (_timer >= maxSpawnDelay)
+        // When wave is fully done (all batches spawned + queue drained), start a new wave
+        if (Spawner.Instance != null && Spawner.Instance.IsWaveDone)
         {
-            _timer = 0;
             GenerateWave();
         }
 
-     
         _moveTimer += Time.deltaTime;
         if (_moveTimer >= moveDelay / difficulty)
         {
             _moveTimer = 0;
-            if (Spawner.Instance != null && Spawner.Instance.spawnedObjects.Count > 0)
+            if (Spawner.Instance != null)
             {
                 Spawner.Instance.MoveObject();
             }
@@ -66,6 +63,17 @@ public class GameManager : Singleton<GameManager>
             instance.ShapeIndex = Random.Range(0, items.items.Count);
             tempItems.Add(instance);
         }
+
+        // Calculate how many respawns fit in the wave duration
+        // One batch takes: numberOfItems * moveInterval
+        float moveInterval = moveDelay / difficulty;
+        int respawnCount = Mathf.FloorToInt(waveDuration / (number * moveInterval));
+        // Subtract 1 because the first spawn is the initial, respawns are the repeats
+        respawnCount = Mathf.Max(0, respawnCount - 1);
+
+        if (Spawner.Instance != null)
+            Spawner.Instance.SetRespawnCount(respawnCount);
+
         OnNewWave?.Invoke(tempItems.ToArray());
     }
 

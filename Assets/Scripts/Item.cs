@@ -27,7 +27,12 @@ public class Item : MonoBehaviour
     public void Move(Vector3 direction)
     {
         transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
-            .SetEase(Ease.OutQuad);
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                Spawner.Instance.ResolveItem();
+                Destroy(gameObject);
+            });
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,6 +67,10 @@ public class Item : MonoBehaviour
 
     public void FadeAway(float fadeAwayTime)
     {
-        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() => Destroy(gameObject));
+        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() =>
+        {
+            Spawner.Instance.ResolveItem();
+            Destroy(gameObject);
+        });
     }
 }

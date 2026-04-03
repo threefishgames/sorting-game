@@ -10,6 +10,12 @@ public class Spawner : Singleton<Spawner>
 
     public Queue<Item> spawnedObjects = new Queue<Item>();
 
+    private ItemData[] currentWaveData;
+    private int respawnsRemaining;
+    private int activeItemCount;
+
+    public bool IsWaveDone => spawnedObjects.Count == 0 && respawnsRemaining <= 0 && activeItemCount <= 0;
+
     private void OnValidate()
     {
         spawnPoint = transform;
@@ -26,7 +32,19 @@ public class Spawner : Singleton<Spawner>
         GameManager.OnNewWave -= SpawnWave;
     }
 
+    public void SetRespawnCount(int count)
+    {
+        respawnsRemaining = count;
+    }
+
     private void SpawnWave(ItemData[] data)
+    {
+        currentWaveData = data;
+        activeItemCount = 0;
+        SpawnFromData(data);
+    }
+
+    private void SpawnFromData(ItemData[] data)
     {
         for (int i = 0; i < data.Length; i++)
         {
@@ -40,8 +58,32 @@ public class Spawner : Singleton<Spawner>
         }
     }
 
+    private void Respawn()
+    {
+        // Shuffle the existing wave data (Fisher-Yates)
+        ItemData[] shuffled = (ItemData[])currentWaveData.Clone();
+        for (int i = shuffled.Length - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
+        }
+
+        respawnsRemaining--;
+        SpawnFromData(shuffled);
+    }
+
     public void MoveObject()
     {
+        // Queue empty but respawns left — refill with shuffled same wave
+        if (spawnedObjects.Count == 0 && respawnsRemaining > 0)
+        {
+            Respawn();
+        }
+
+        if (spawnedObjects.Count == 0)
+            return;
+
+        activeItemCount++;
         var obj = spawnedObjects.Dequeue();
         obj.transform.DOMoveY(midPoint.position.y, GameManager.Instance.moveSpeed)
             .SetEase(Ease.Linear)
@@ -52,5 +94,10 @@ public class Spawner : Singleton<Spawner>
                     GameManager.Instance.DestroyCurrentItem();
                 }
             });
+    }
+
+    public void ResolveItem()
+    {
+        activeItemCount--;
     }
 }
