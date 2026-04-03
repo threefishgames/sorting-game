@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd2d150780d0434baf9cb945edb99fe, type: 3}
+  m_Name: New Spawn Settings
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnSettings
+  waves:
+  - waveDuration: 36
+    moveDelay: 2
+    moveSpeed: 12
+    itemsPerWave: 2
+  - waveDuration: 30
+    moveDelay: 1.8
+    moveSpeed: 12
+    itemsPerWave: 3
+  - waveDuration: 36
+    moveDelay: 1.5
+    moveSpeed: 11
+    itemsPerWave: 4
+  - waveDuration: 37
+    moveDelay: 1.5
+    moveSpeed: 10.8
+    itemsPerWave: 4
+  - waveDuration: 39
+    moveDelay: 1.4
+    moveSpeed: 10.6
+    itemsPerWave: 4
+  - waveDuration: 39
+    moveDelay: 1.4
+    moveSpeed: 10.5
+    itemsPerWave: 4
+  - waveDuration: 40
+    moveDelay: 1.4
+    moveSpeed: 10.5
+    itemsPerWave: 5
+  - waveDuration: 42
+    moveDelay: 1.4
+    moveSpeed: 10.2
+    itemsPerWave: 5
+  - waveDuration: 44
+    moveDelay: 1.3
+    moveSpeed: 9.8
+    itemsPerWave: 5
+  - waveDuration: 44
+    moveDelay: 1.3
+    moveSpeed: 9.9
+    itemsPerWave: 5
+  - waveDuration: 44
+    moveDelay: 1.3
+    moveSpeed: 9.9
+    itemsPerWave: 5
+  - waveDuration: 47
+    moveDelay: 1.3
+    moveSpeed: 9.5
+    itemsPerWave: 5
+  - waveDuration: 50
+    moveDelay: 1.2
+    moveSpeed: 9.1
+    itemsPerWave: 6
+  - waveDuration: 49
+    moveDelay: 1.2
+    moveSpeed: 9.3
+    itemsPerWave: 6
+  - waveDuration: 48
+    moveDelay: 1.2
+    moveSpeed: 9.4
+    itemsPerWave: 6
+  - waveDuration: 52
+    moveDelay: 1.1
+    moveSpeed: 8.9
+    itemsPerWave: 6
+  - waveDuration: 56
+    moveDelay: 1.1
+    moveSpeed: 8.3
+    itemsPerWave: 7
+  - waveDuration: 53
+    moveDelay: 1.1
+    moveSpeed: 8.7
+    itemsPerWave: 6
+  - waveDuration: 52
+    moveDelay: 1.1
+    moveSpeed: 8.9
+    itemsPerWave: 6
+  - waveDuration: 56
+    moveDelay: 1
+    moveSpeed: 8.2
+    itemsPerWave: 7
+  - waveDuration: 61
+    moveDelay: 0.9
+    moveSpeed: 7.5
+    itemsPerWave: 7
+  - waveDuration: 58
+    moveDelay: 1
+    moveSpeed: 8
+    itemsPerWave: 7
+  - waveDuration: 56
+    moveDelay: 1.1
+    moveSpeed: 8.3
+    itemsPerWave: 7
+  - waveDuration: 61
+    moveDelay: 0.9
+    moveSpeed: 7.6
+    itemsPerWave: 7
+  - waveDuration: 67
+    moveDelay: 0.8
+    moveSpeed: 6.8
+    itemsPerWave: 8
+  - waveDuration: 62
+    moveDelay: 0.9
+    moveSpeed: 7.4
+    itemsPerWave: 8
+  - waveDuration: 59
+    moveDelay: 1
+    moveSpeed: 7.8
+    itemsPerWave: 7
+  - waveDuration: 66
+    moveDelay: 0.8
+    moveSpeed: 6.9
+    itemsPerWave: 8
+  - waveDuration: 73
+    moveDelay: 0.7
+    moveSpeed: 6
+    itemsPerWave: 9
+  - waveDuration: 67
+    moveDelay: 0.8
+    moveSpeed: 6.8
+    itemsPerWave: 8
