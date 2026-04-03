@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TrayManager : MonoBehaviour
 {
@@ -20,6 +23,16 @@ public class TrayManager : MonoBehaviour
             });
         }
         SetTrays(mockItems);
+    }
+
+    private void Awake()
+    {
+        GameManager.OnNewWave += GameManagerOnOnNewWave ;
+    }
+
+    private void GameManagerOnOnNewWave(ItemData[] obj)
+    {
+        SetTrays(obj.ToList());
     }
 
     public void SetTrays(List<ItemData> itemDatas)
