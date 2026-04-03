@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class Tray : MonoBehaviour
 {
@@ -17,6 +19,13 @@ public class Tray : MonoBehaviour
     {
         items = new List<ItemData>(newItems);
         SpawnTray();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Item>(out var item))
+        {
+        }
     }
 
     [ContextMenu("Add Item")]
@@ -48,7 +57,7 @@ public class Tray : MonoBehaviour
             Vector2 spawnPos = new Vector2(xPos, yPos + animHeight);
             GameObject item = Instantiate(itemType.items[i.ShapeIndex].gameObject, spawnPos, Quaternion.identity, currentTray.transform);
             item.transform.localScale = Vector3.zero;
-            item.GetComponent<Item>().Init(itemType.colors[i.ColorIndex]);
+            item.GetComponent<Item>().Init(i,itemType.colors[i.ColorIndex]);
 
             SpriteRenderer itemSr = item.GetComponent<SpriteRenderer>();
             itemSr.color = new Color(itemSr.color.r, itemSr.color.g, itemSr.color.b, 0f);
