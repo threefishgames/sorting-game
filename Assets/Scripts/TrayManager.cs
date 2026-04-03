@@ -27,12 +27,14 @@ public class TrayManager : MonoBehaviour
 
     public void OnScoreIncreased()
     {
-       Debug.Log("Score increased"); 
+        Debug.Log("Score increased");
+        GameManager.Instance.OnCorrectSort();
     }
 
     public void OnScoreDecreased()
     {
-       Debug.Log("Score decreased"); 
+        Debug.Log("Score decreased");
+        GameManager.Instance.OnWrongSort();
     }
 
     private void Awake()

@@ -12,6 +12,13 @@ public class GameManager : Singleton<GameManager>
     public ItemTypes items;
     public SpawnSettings spawnSettings;
 
+    [Header("Dynamic Difficulty")]
+    [Range(0.01f, 0.2f)] public float difficultyStep = 0.05f;
+    [Range(0.1f, 1f)] public float minDifficulty = 0.1f;
+    [Range(0.1f, 1f)] public float maxDifficulty = 1f;
+    [Range(0.01f, 0.5f)] public float difficultySmoothing = 0.1f;
+    private float targetDifficulty;
+
     [Header("Runtime - Current Wave Settings")]
     public float moveSpeed;
     private float waveDuration;
@@ -32,6 +39,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        targetDifficulty = difficulty;
         currentWaveIndex = 0;
         ApplyWaveSettings();
         GenerateWave();
@@ -49,8 +57,25 @@ public class GameManager : Singleton<GameManager>
         itemsPerWave = entry.itemsPerWave;
     }
 
+    public void OnCorrectSort()
+    {
+        targetDifficulty = Mathf.Min(targetDifficulty + difficultyStep, maxDifficulty);
+    }
+
+    public void OnWrongSort()
+    {
+        targetDifficulty = Mathf.Max(targetDifficulty - difficultyStep, minDifficulty);
+    }
+
+    public void OnMissedItem()
+    {
+        targetDifficulty = Mathf.Max(targetDifficulty - difficultyStep * 2f, minDifficulty);
+    }
+
     private void Update()
     {
+        difficulty = Mathf.MoveTowards(difficulty, targetDifficulty, difficultySmoothing * Time.deltaTime);
+
         // When wave is fully done (all batches spawned + queue drained), advance and start a new wave
         if (Spawner.Instance != null && Spawner.Instance.IsWaveDone)
         {
@@ -164,6 +189,7 @@ public class GameManager : Singleton<GameManager>
 
     public void DestroyCurrentItem()
     {
+        OnMissedItem();
         currentItem.FadeAway(fadeAwayTime);
         currentItem = null;
     }
