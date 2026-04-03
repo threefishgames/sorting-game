@@ -25,9 +25,23 @@ public class TrayManager : MonoBehaviour
         SetTrays(mockItems);
     }
 
+    public void OnScoreIncreased()
+    {
+       Debug.Log("Score increased"); 
+    }
+
+    public void OnScoreDecreased()
+    {
+       Debug.Log("Score decreased"); 
+    }
+
     private void Awake()
     {
         GameManager.OnNewWave += GameManagerOnOnNewWave ;
+        foreach (Tray tray in trays)
+        {
+            tray.Init(OnScoreIncreased, OnScoreDecreased);
+        }
     }
 
     private void GameManagerOnOnNewWave(ItemData[] obj)
