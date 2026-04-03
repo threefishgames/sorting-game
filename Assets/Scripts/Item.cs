@@ -32,6 +32,7 @@ public class Item : MonoBehaviour
 
     [HideInInspector] public bool isReady;
     [HideInInspector] public bool isUIElement;
+    private bool isSwiped;
 
     public void Init(ItemData data, Color color)
     {
@@ -41,13 +42,18 @@ public class Item : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
+        isSwiped = true;
         transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
-            .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                Spawner.Instance.ResolveItem();
-                Destroy(gameObject);
-            });
+            .SetEase(Ease.OutQuad);
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (!isSwiped) return;
+
+        transform.DOKill();
+        Spawner.Instance.ResolveItem();
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -82,6 +88,10 @@ public class Item : MonoBehaviour
 
     public void FadeAway(float fadeAwayTime)
     {
-        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() => Destroy(gameObject));
+        spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() =>
+        {
+            Spawner.Instance.ResolveItem();
+            Destroy(gameObject);
+        });
     }
 }

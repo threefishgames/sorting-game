@@ -10,11 +10,14 @@ public class GameManager : Singleton<GameManager>
     [Header("Game Settings")]
     [Range(0.1f, 1)] public float difficulty = 0.5f;
     public ItemTypes items;
+    public SpawnSettings spawnSettings;
 
-    [Header("Spawning")]
-    public float waveDuration = 36f;
-    public float moveDelay = 2f;
-    public float moveSpeed = 12f;
+    [Header("Runtime - Current Wave Settings")]
+    public float moveSpeed;
+    private float waveDuration;
+    private float moveDelay;
+    private int itemsPerWave;
+    private int currentWaveIndex;
 
     [Header("Swipe")]
     public float minSwipeDistance = 50f;
@@ -29,14 +32,33 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        currentWaveIndex = 0;
+        ApplyWaveSettings();
         GenerateWave();
+    }
+
+    private void ApplyWaveSettings()
+    {
+        if (spawnSettings == null || spawnSettings.waves.Count == 0)
+            return;
+
+        var entry = spawnSettings.waves[currentWaveIndex];
+        waveDuration = entry.waveDuration;
+        moveDelay = entry.moveDelay;
+        moveSpeed = entry.moveSpeed;
+        itemsPerWave = entry.itemsPerWave;
     }
 
     private void Update()
     {
-        // When wave is fully done (all batches spawned + queue drained), start a new wave
+        // When wave is fully done (all batches spawned + queue drained), advance and start a new wave
         if (Spawner.Instance != null && Spawner.Instance.IsWaveDone)
         {
+            if (spawnSettings != null && spawnSettings.waves.Count > 0)
+            {
+                currentWaveIndex = (currentWaveIndex + 1) % spawnSettings.waves.Count;
+                ApplyWaveSettings();
+            }
             GenerateWave();
         }
 
@@ -52,11 +74,11 @@ public class GameManager : Singleton<GameManager>
 
         DetectSwipe();
     }
-
-    private void GenerateWave(int number = 3)
+    
+    private void GenerateWave()
     {
         List<ItemData> tempItems = new List<ItemData>();
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < itemsPerWave; i++)
         {
             ItemData instance = new ItemData();
             instance.ColorIndex = Random.Range(0, items.colors.Count);
@@ -67,7 +89,7 @@ public class GameManager : Singleton<GameManager>
         // Calculate how many respawns fit in the wave duration
         // One batch takes: numberOfItems * moveInterval
         float moveInterval = moveDelay / difficulty;
-        int respawnCount = Mathf.FloorToInt(waveDuration / (number * moveInterval));
+        int respawnCount = Mathf.FloorToInt(waveDuration / (itemsPerWave * moveInterval));
         // Subtract 1 because the first spawn is the initial, respawns are the repeats
         respawnCount = Mathf.Max(0, respawnCount - 1);
 
