@@ -78,12 +78,17 @@ public class GameManager : Singleton<GameManager>
     private void GenerateWave()
     {
         List<ItemData> tempItems = new List<ItemData>();
-        for (int i = 0; i < itemsPerWave; i++)
+        int maxCombinations = items.colors.Count * items.items.Count;
+        int count = Mathf.Min(itemsPerWave, maxCombinations);
+
+        while (tempItems.Count < count)
         {
             ItemData instance = new ItemData();
             instance.ColorIndex = Random.Range(0, items.colors.Count);
             instance.ShapeIndex = Random.Range(0, items.items.Count);
-            tempItems.Add(instance);
+
+            if (!tempItems.Contains(instance))
+                tempItems.Add(instance);
         }
 
         // Calculate how many respawns fit in the wave duration
