@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tray
   itemType: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   offset: 0.1
-  scale: 0.1
+  scale: 0.18
   animDuration: 0.7
   animHeight: 1
 --- !u!4 &46976270
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tray
   itemType: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   offset: 0.1
-  scale: 0.1
+  scale: 0.18
   animDuration: 0.7
   animHeight: 1
 --- !u!4 &241473375
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tray
   itemType: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   offset: 0.1
-  scale: 0.1
+  scale: 0.18
   animDuration: 0.7
   animHeight: 1
 --- !u!4 &1475490683
