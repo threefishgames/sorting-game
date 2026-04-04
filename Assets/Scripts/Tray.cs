@@ -72,9 +72,13 @@ public class Tray : MonoBehaviour
 
             xPos += halfWidth;
             Vector2 spawnPos = new Vector2(xPos, yPos + animHeight);
-            GameObject item = Instantiate(itemType.items[i.ShapeIndex].gameObject, spawnPos, Quaternion.identity, currentTray.transform);
+            GameObject item = Instantiate(itemType.items[i.ShapeIndex].gameObject, spawnPos, Quaternion.identity,
+                currentTray.transform);
+            if (item.TryGetComponent<Collider2D>(out var col))
+                col.enabled = false;
+            
             item.transform.localScale = Vector3.zero;
-            item.GetComponent<Item>().Init(i,itemType.colors[i.ColorIndex]);
+            item.GetComponent<Item>().Init(i, itemType.colors[i.ColorIndex]);
 
             SpriteRenderer itemSr = item.GetComponent<SpriteRenderer>();
             itemSr.color = new Color(itemSr.color.r, itemSr.color.g, itemSr.color.b, 0f);
@@ -103,6 +107,7 @@ public class Tray : MonoBehaviour
                 sr.DOKill();
                 sr.DOFade(0f, animDuration * 0.5f).SetEase(Ease.InQuad).SetLink(child.gameObject);
             }
+
             child.DOScale(Vector3.zero, animDuration).SetEase(Ease.InBack).SetLink(child.gameObject);
             child.DOMoveY(targetY, animDuration).SetEase(Ease.InCirc).SetLink(child.gameObject)
                 .OnComplete(() =>

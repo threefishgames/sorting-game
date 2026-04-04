@@ -29,6 +29,8 @@ public class Item : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public float moveDistance = 5f;
+    public float snapDistance = 1f;
+    public float snapDuration = 0.15f;
 
     [HideInInspector] public bool isReady;
     [HideInInspector] public bool isUIElement;
@@ -43,8 +45,16 @@ public class Item : MonoBehaviour
     public void Move(Vector3 direction)
     {
         isSwiped = true;
-        transform.DOMove(transform.position + direction * moveDistance, GameManager.Instance.moveSpeed)
-            .SetEase(Ease.OutQuad);
+        transform.DOKill();
+
+        Vector3 snapTarget = transform.position + direction * snapDistance;
+        float remainingDistance = moveDistance - snapDistance;
+
+        Sequence seq = DOTween.Sequence();
+        seq.SetTarget(transform);
+        seq.Append(transform.DOMove(snapTarget, snapDuration).SetEase(Ease.OutQuad));
+        seq.Append(transform.DOMove(snapTarget + direction * remainingDistance, GameManager.Instance.moveSpeed)
+            .SetEase(Ease.Linear));
     }
 
     private void OnBecameInvisible()
@@ -67,6 +77,11 @@ public class Item : MonoBehaviour
                 GameManager.Instance.DestroyCurrentItem();
             }
 
+            // Snap to the center of the splitter
+            transform.DOKill();
+            Vector3 snapTarget = new Vector3(other.transform.position.x, other.transform.position.y, transform.position.z);
+            transform.DOMove(snapTarget, 0.15f).SetEase(Ease.OutQuad);
+
             isReady = true;
             GameManager.Instance.currentItem = this;
         }
@@ -88,6 +103,7 @@ public class Item : MonoBehaviour
 
     public void FadeAway(float fadeAwayTime)
     {
+        transform.DOKill();
         spriteRenderer.DOFade(0, fadeAwayTime).OnComplete(() =>
         {
             Spawner.Instance.ResolveItem();
