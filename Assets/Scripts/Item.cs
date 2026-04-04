@@ -32,19 +32,29 @@ public class Item : MonoBehaviour
     public float snapDistance = 1f;
     public float snapDuration = 0.15f;
 
+    [Header("Highlight")]
+    public float pulseScale = 1.15f;
+    public float pulseDuration = 0.4f;
+    public float highlightBrightness = 1.4f;
+
     [HideInInspector] public bool isReady;
     [HideInInspector] public bool isUIElement;
     private bool isSwiped;
+    private Color baseColor;
+    private Vector3 initialScale;
+    private Tweener pulseTween;
 
     public void Init(ItemData data, Color color)
     {
         this.itemData = data;
         spriteRenderer.color = color;
+        initialScale = transform.localScale;
     }
 
     public void Move(Vector3 direction)
     {
         isSwiped = true;
+        StopHighlight();
         transform.DOKill();
 
         Vector3 snapTarget = transform.position + direction * snapDistance;
@@ -84,6 +94,7 @@ public class Item : MonoBehaviour
 
             isReady = true;
             GameManager.Instance.currentItem = this;
+            StartHighlight();
         }
     }
 
@@ -98,7 +109,30 @@ public class Item : MonoBehaviour
             {
                 GameManager.Instance.currentItem = null;
             }
+            StopHighlight();
         }
+    }
+
+    private void StartHighlight()
+    {
+        baseColor = spriteRenderer.color;
+        Color bright = baseColor * highlightBrightness;
+        bright.a = baseColor.a;
+        spriteRenderer.color = bright;
+
+        pulseTween = transform.DOScale(initialScale * pulseScale, pulseDuration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetTarget(transform);
+    }
+
+    private void StopHighlight()
+    {
+        if (pulseTween != null && pulseTween.IsActive())
+            pulseTween.Kill();
+
+        transform.localScale = initialScale;
+        spriteRenderer.color = baseColor;
     }
 
     public void FadeAway(float fadeAwayTime)
