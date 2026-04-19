@@ -1564,8 +1564,8 @@ MonoBehaviour:
   items: {fileID: 11400000, guid: 3c996c0a105277c4593ed9804ec778cf, type: 2}
   spawnSettings: {fileID: 11400000, guid: 60376a68e89a7b143a9d1fcc10493331, type: 2}
   difficultyStep: 0.05
-  minDifficulty: 0.1
-  maxDifficulty: 1
+  minDifficulty: 0.5
+  maxDifficulty: 2
   difficultySmoothing: 0.1
   moveSpeed: 12
   minSwipeDistance: 50

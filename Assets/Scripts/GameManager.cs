@@ -9,14 +9,14 @@ public class GameManager : Singleton<GameManager>
     public static event Action<int> OnScoreUpdated;
 
     [Header("Game Settings")]
-    [Range(0.1f, 1)] public float difficulty = 0.5f;
+    [Range(0.1f, 2)] public float difficulty = 0.5f;
     public ItemTypes items;
     public SpawnSettings spawnSettings;
 
     [Header("Dynamic Difficulty")]
     [Range(0.01f, 0.2f)] public float difficultyStep = 0.05f;
     [Range(0.1f, 1f)] public float minDifficulty = 0.1f;
-    [Range(0.1f, 1f)] public float maxDifficulty = 1f;
+    [Range(0.1f, 2f)] public float maxDifficulty = 1f;
     [Range(0.01f, 0.5f)] public float difficultySmoothing = 0.1f;
     private float targetDifficulty;
 

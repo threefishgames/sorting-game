@@ -15,6 +15,7 @@ public class SwipeTrail : MonoBehaviour
     private TrailRenderer trail;
     private Camera mainCam;
     private bool isSwiping;
+    private bool startNextFrame;
 
     private void Start()
     {
@@ -41,7 +42,6 @@ public class SwipeTrail : MonoBehaviour
         }
 
         trail.emitting = false;
-        // Start off-screen so stale trail points don't flash
         transform.position = new Vector3(-999, -999, 0);
     }
 
@@ -49,12 +49,20 @@ public class SwipeTrail : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 worldPos = GetWorldMousePosition();
-            // Teleport without leaving a trail
+            // Stop emitting, teleport, and clear so no segment is drawn from the old position
+            trail.emitting = false;
+            transform.position = GetWorldMousePosition();
             trail.Clear();
-            transform.position = worldPos;
-            trail.emitting = true;
+            startNextFrame = true;
             isSwiping = true;
+        }
+
+        // Enable emitting one frame after the teleport so the TrailRenderer
+        // doesn't connect from the previous release position
+        if (startNextFrame && !Input.GetMouseButtonDown(0))
+        {
+            trail.emitting = true;
+            startNextFrame = false;
         }
 
         if (isSwiping)
