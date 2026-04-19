@@ -85,7 +85,8 @@ public class Spawner : Singleton<Spawner>
 
         activeItemCount++;
         var obj = spawnedObjects.Dequeue();
-        obj.transform.DOMoveY(midPoint.position.y, GameManager.Instance.moveSpeed)
+        float scaledMoveSpeed = GameManager.Instance.moveSpeed / GameManager.Instance.difficulty;
+        obj.transform.DOMoveY(midPoint.position.y, scaledMoveSpeed)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {

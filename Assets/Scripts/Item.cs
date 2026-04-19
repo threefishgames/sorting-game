@@ -94,6 +94,7 @@ public class Item : MonoBehaviour
 
             isReady = true;
             GameManager.Instance.currentItem = this;
+            GameManager.Instance.NotifyItemReady();
             StartHighlight();
         }
     }
