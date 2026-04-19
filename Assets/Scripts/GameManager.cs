@@ -71,13 +71,13 @@ public class GameManager : Singleton<GameManager>
 
     public void OnCorrectSort()
     {
-        score++;
+        Score++;
         targetDifficulty = Mathf.Min(targetDifficulty + difficultyStep, maxDifficulty);
     }
 
     public void OnWrongSort()
     {
-        score--;
+        Score--;
         targetDifficulty = Mathf.Max(targetDifficulty - difficultyStep, minDifficulty);
     }
 
