@@ -107,9 +107,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1636554965171875337}
   moveDistance: 5
   snapDistance: 1
-  snapDuration: 0.15
+  snapDuration: 0.2
   pulseScale: 1.15
   pulseDuration: 0.4
-  highlightBrightness: 1.4
+  highlightBrightness: 3
   isReady: 0
   isUIElement: 0
