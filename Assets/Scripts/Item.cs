@@ -43,6 +43,7 @@ public class Item : MonoBehaviour
     private Color baseColor;
     private Vector3 initialScale;
     private Tweener pulseTween;
+    private Tweener snapTween;
 
     public void Init(ItemData data, Color color)
     {
@@ -55,8 +56,21 @@ public class Item : MonoBehaviour
     {
         isSwiped = true;
         StopHighlight();
-        transform.DOKill();
 
+        // If the snap-to-center tween is still running, let it finish first
+        if (snapTween != null && snapTween.IsActive() && snapTween.IsPlaying())
+        {
+            snapTween.OnComplete(() => ExecuteMove(direction));
+        }
+        else
+        {
+            transform.DOKill();
+            ExecuteMove(direction);
+        }
+    }
+
+    private void ExecuteMove(Vector3 direction)
+    {
         Vector3 snapTarget = transform.position + direction * snapDistance;
         float remainingDistance = moveDistance - snapDistance;
 
@@ -90,7 +104,7 @@ public class Item : MonoBehaviour
             // Snap to the center of the splitter
             transform.DOKill();
             Vector3 snapTarget = new Vector3(other.transform.position.x, other.transform.position.y, transform.position.z);
-            transform.DOMove(snapTarget, 0.15f).SetEase(Ease.OutQuad);
+            snapTween = transform.DOMove(snapTarget, 0.15f).SetEase(Ease.OutQuad);
 
             isReady = true;
             GameManager.Instance.currentItem = this;
